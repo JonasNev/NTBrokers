@@ -1,0 +1,33 @@
+﻿NT užduotis
+company: VS-Done DB- done
+name //NT Kings, CAPITAL..
+city //vilnius, kaunas ir tt
+street // Geležinkelio g.
+address //namo/buto numeris
+
+broker: VS-Done DB-done
+name // Jurgis
+surname // Marazm
+
+house: VS-Done DB- done
+city //vilnius, kaunas ir tt
+street // Geležinkelio g.
+address //namo/buto numeris
+flatFloor // 3 (aukštas iš 5)
+buildingFlors //5 (aukštai)
+arre
+broker_id //brokeris kas parduoda
+company_id // kurioje įmonėje jis parduoda butą. reikalinga filtravimui pagal imonę.
+
+company_broker: VS-Done DB- done
+broker_id
+company_id
+
+company, brocker,house crudai.
+homepage visi butai su jų info bei: company_name, broker_name/surname viename fielde.
+užėjus į konkrečią įmonę galima matyti brokerius kurie dirba įmonėje
+paspaudus ant brokerio galima matyti visus jo parduodamus butus.
+
+filtruoti pagal brokerį
+filtruoti pagal miestą
+filtruoti pagal butai parduodami per įmonę

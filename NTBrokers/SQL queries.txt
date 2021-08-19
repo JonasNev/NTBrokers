@@ -1,0 +1,27 @@
+﻿Create a junction between two tables (Companies, Brokers)
+
+"create table CompaniesBrokers
+(
+Broker_id int,
+Company_id int,
+CONSTRAINT Fk_brokercompany PRIMARY KEY (Broker_id, Company_id),
+CONSTRAINT FK_broker
+FOREIGN KEY (Broker_id) REFERENCES dbo.Brokers (Id),
+CONSTRAINT FK_company
+FOREIGN KEY (Company_id) REFERENCES dbo.Companies (Id)
+);"
+________________________________________________________________________
+
+Create a table with a foreign key reference
+
+"CREATE TABLE Houses (
+    Id int IDENTITY(1,1) PRIMARY KEY,
+    City varchar(255),
+	Street varchar(255),
+	Address varchar(255),
+	Floor int,
+	BuildingFloor int,
+	FOREIGN KEY (Broker_id) REFERENCES Brokers(Id)
+); "
+______________________________________________________________________
+
