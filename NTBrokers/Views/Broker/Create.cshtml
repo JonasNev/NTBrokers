@@ -1,0 +1,18 @@
+﻿@model BrokerModel
+
+<h2>Add a broker</h2>
+
+@using (Html.BeginForm("Create", "Broker", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(c => c.Name, "Name of broker")
+        @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Surname, "Surname of broker")
+        @Html.TextBoxFor(c => c.Surname, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(c => c.Id)
+    <button type="submit" class="btn btn-primary">Add</button>
+    @Html.ActionLink("Cancel", "Index", "Broker", null, new { @class = "btn btn-secondary" })
+}

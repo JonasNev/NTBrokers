@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using NTBrokers.Services;
 
 namespace NTBrokers
 {
@@ -26,6 +27,9 @@ namespace NTBrokers
         {
             services.AddControllersWithViews();
             services.AddTransient<SqlConnection>(_ => new SqlConnection(Configuration["ConnectionStrings:Default"]));
+            services.AddScoped<BrokerService>();
+            services.AddScoped<CompanyService>();
+            services.AddScoped<RealEstateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
