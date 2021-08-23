@@ -13,7 +13,7 @@ namespace NTBrokers.Models
         public string Street { get; set; }
         public string Address { get; set; }
         public string Number { get; set; }
-        public List<int> Employees { get; set; } = new();
+        public List<BrokerModel> BrokersEdit { get; set; } = new();
 
 
     }

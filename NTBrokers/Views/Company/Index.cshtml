@@ -23,7 +23,10 @@ else
             <tr>
                 <td class="text-center">@company.Name</td>
                 <td class="text-center">@company.Address</td>
-                <td>@Html.ActionLink("Add aditional broker", "Create", "Company", null, new { @class = "btn btn-primary float-right" })</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Company", new { id = company.Id }, new { @class = "btn btn-warning", @style = "color:white" })
+                    @Html.ActionLink("Delete", "Delete", "Company", new { id = company.Id }, new { @class = "btn btn-danger", @style = "color:white" })
+                </td>
             </tr>}
         </tbody>
     </table>}

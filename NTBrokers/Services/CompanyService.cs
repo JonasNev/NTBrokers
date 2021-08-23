@@ -26,19 +26,70 @@ namespace NTBrokers.Services
 
             _connection.Close();
 
-            int athleteId = GetLastId();
-            if (athleteId == 0) return;
-
-            foreach (var entry in model.Companies)
+            int lastCompanyId = GetLastId();
+            if (lastCompanyId == 0)
             {
-                
+                return;
+            }
+            AddJunction(model,lastCompanyId);
+        }
+
+        public void DeleteCompany(int deleteid)
+        {
+            string command = $@"DELETE FROM Dbo.Companies
+                                WHERE Id = {deleteid}";
+            DeleteJunction(deleteid);
+            _connection.Open();
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
+            _connection.Close();
+        }
+
+
+        public void AddJunction(RealEstateModel model, int lastcompanyId)
+        {
+            string query = "";
+            foreach (var entry in model.BrokerIds)
+            {
+                query += $"({entry}, {lastcompanyId}), ";
             }
 
+            query = query.Remove(query.Length - 2);
+
+            string commandCP = @$"INSERT INTO dbo.CompaniesBrokers(Broker_id, Company_id)
+                                                    VALUES {query}";
             _connection.Open();
-            using var commandCP = new SqlCommand(@$"INSERT INTO dbo.CompaniesBrokers(Broker_id, Company_id)
-                                                    VALUES({ model.Brokers[0].Id}, { model.Companies[0].Id});", _connection);
-            commandCP.ExecuteNonQuery();
+            using var command = new SqlCommand(commandCP, _connection);
+            command.ExecuteNonQuery();
             _connection.Close();
+        }
+
+        public void DeleteJunction(int deleteId)
+        {
+            string command = $"DELETE FROM dbo.CompaniesBrokers WHERE Company_id = {deleteId};";
+
+            _connection.Open();
+
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
+
+            _connection.Close();
+        }
+
+        public void UpdateCompany(RealEstateModel model)
+        {
+            string generateAdress = $"{model.Companies[0].Street} {model.Companies[0].Number}, {model.Companies[0].City}";
+
+            string command = $@"UPDATE dbo.Companies
+                                SET Name = '{model.Companies[0].Name}', City = '{model.Companies[0].City}', Street = '{model.Companies[0].Street}', Address = '{generateAdress}', Number = '{model.Companies[0].Number}'
+                                WHERE Id = {model.Companies[0].Id}";
+            _connection.Open();
+
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
+            _connection.Close();
+            DeleteJunction(model.Companies[0].Id);
+            AddJunction(model, model.Companies[0].Id);
         }
 
         public List<CompanyModel> GetCompanies()
@@ -68,11 +119,6 @@ namespace NTBrokers.Services
             _connection.Close();
 
             return companies;
-        }
-
-        public void AddCompanyBrokerJunction(CompanyModel model, int id)
-        {
-            
         }
 
         private int GetLastId()

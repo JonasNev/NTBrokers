@@ -31,10 +31,29 @@ namespace NTBrokers.Controllers
             return View(model);
         }
 
+        public IActionResult Edit(int id)
+        {
+            RealEstateModel model = _realEstateService.GetModelForEdit(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(RealEstateModel model)
+        {
+            _companyService.UpdateCompany(model);
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public IActionResult Create(RealEstateModel model)
         {
             _companyService.AddCompany(model);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _companyService.DeleteCompany(id);
             return RedirectToAction("Index");
         }
     }

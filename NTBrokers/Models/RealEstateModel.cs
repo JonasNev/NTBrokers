@@ -10,6 +10,7 @@ namespace NTBrokers.Models
         public List<BrokerModel> Brokers { get; set; }
         public List<HouseModel> Houses { get; set; }
         public List<CompanyModel> Companies { get; set; }
+        public List<int> BrokerIds { get; set; }
 
 
     }

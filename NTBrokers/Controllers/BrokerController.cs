@@ -33,5 +33,6 @@ namespace NTBrokers.Controllers
             _brokerService.AddBroker(broker);
             return RedirectToAction("Index");
         }
+
     }
 }
