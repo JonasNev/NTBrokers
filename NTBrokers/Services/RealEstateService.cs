@@ -12,12 +12,14 @@ namespace NTBrokers.Services
         private SqlConnection _connection;
         private BrokerService _brokerService;
         private CompanyService _companyService;
+        private ApartmentService _apartmentService;
 
-        public RealEstateService(SqlConnection connection,BrokerService brokerService, CompanyService companyService)
+        public RealEstateService(SqlConnection connection,BrokerService brokerService, CompanyService companyService, ApartmentService apartmentService)
         {
             _connection = connection;
             _companyService = companyService;
             _brokerService = brokerService;
+            _apartmentService = apartmentService;
         }
 
         public RealEstateModel GetModelForCompanyCreate()
@@ -28,11 +30,23 @@ namespace NTBrokers.Services
             return model;
         }
 
+        public RealEstateModel GetModelForApartmentCreate()
+        {
+            RealEstateModel model = new RealEstateModel();
+            model.Brokers = _brokerService.GetBrokers();
+            model.Companies = _companyService.GetCompanies();
+            model.Cities = GetCompanyCities();
+
+            return model;
+
+        }
+
         public RealEstateModel GetModelForIndex()
         {
             RealEstateModel model = new RealEstateModel();
             model.Brokers = _brokerService.GetBrokers();
             model.Companies = _companyService.GetCompanies();
+            model.Apartments = _apartmentService.GetApartments();
             return model;
         }
 
@@ -74,6 +88,23 @@ namespace NTBrokers.Services
             _connection.Close();
 
             return brokerIds;
+        }
+
+        public List<string> GetCompanyCities()
+        {
+            List<string> cities = new List<string>();
+            _connection.Open();
+            using var command = new SqlCommand("SELECT City FROM dbo.Companies", _connection);
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                cities.Add(reader.GetString(0));
+            }
+
+            _connection.Close();
+
+            return cities;
         }
     }
 }

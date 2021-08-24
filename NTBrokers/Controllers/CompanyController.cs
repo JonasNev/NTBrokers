@@ -31,6 +31,13 @@ namespace NTBrokers.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult Create(RealEstateModel model)
+        {
+            _companyService.AddCompany(model);
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Edit(int id)
         {
             RealEstateModel model = _realEstateService.GetModelForEdit(id);
@@ -44,12 +51,6 @@ namespace NTBrokers.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult Create(RealEstateModel model)
-        {
-            _companyService.AddCompany(model);
-            return RedirectToAction("Index");
-        }
 
         public IActionResult Delete(int id)
         {

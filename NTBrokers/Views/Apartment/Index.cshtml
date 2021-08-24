@@ -1,0 +1,33 @@
+﻿@model RealEstateModel
+
+<h2 class="d-inline-block mb-4">Apartments</h2>
+
+@Html.ActionLink("Add an apartment", "Create", "Apartment", null, new { @class = "btn btn-primary float-right" })
+
+@if (Model.Apartments.Count == 0)
+{
+    <p>There are no Apartments listed</p> }
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Adress</th>
+            <th class="text-center">Actions</th>
+        </tr>s
+        </thead>
+        <tbody>
+        @foreach (var apartment in Model.Apartments)
+        {
+            <tr>
+                <td class="text-center">@apartment.Address</td>
+                <td class="text-center">@apartment.Company.ToString()</td>
+                <td class="text-center">@apartment.Broker</td>
+            </tr>
+
+        }
+        </tbody>
+    </table>
+
+}

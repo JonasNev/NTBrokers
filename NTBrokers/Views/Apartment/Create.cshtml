@@ -1,0 +1,34 @@
+﻿@model RealEstateModel
+
+<h2>Add an apartment</h2>
+
+@using (Html.BeginForm("Create", "Apartment", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(c => c.Apartments[0].City, "City")
+        @Html.TextBoxFor(c => c.Apartments[0].City, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Apartments[0].Street, "Street")
+        @Html.TextBoxFor(c => c.Apartments[0].Street, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Apartments[0].HouseNR, "House No.")
+        @Html.TextBoxFor(c => c.Apartments[0].HouseNR, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Apartments[0].FlatNr, "Flat No.")
+        @Html.TextBoxFor(c => c.Apartments[0].FlatNr, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Apartments[0].Floor, "Building Floor")
+        @Html.TextBoxFor(c => c.Apartments[0].Floor, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Apartments[0].Company_id, "Company")
+        @Html.DropDownListFor(m => m.Apartments[0].Company_id, new SelectList(Model.Companies, "Id", "Name"), "", new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(c => c.Companies[0].Id)
+    <button type="submit" class="btn btn-primary">Add</button>
+    @Html.ActionLink("Cancel", "Index", "Company", null, new { @class = "btn btn-secondary" })
+}

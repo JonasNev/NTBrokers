@@ -8,10 +8,9 @@ namespace NTBrokers.Models
     public class RealEstateModel
     {
         public List<BrokerModel> Brokers { get; set; }
-        public List<HouseModel> Houses { get; set; }
+        public List<ApartmentModel> Apartments { get; set; }
         public List<CompanyModel> Companies { get; set; }
         public List<int> BrokerIds { get; set; }
-
-
+        public List<string> Cities { get; set; }
     }
 }

@@ -30,6 +30,7 @@ namespace NTBrokers
             services.AddScoped<BrokerService>();
             services.AddScoped<CompanyService>();
             services.AddScoped<RealEstateService>();
+            services.AddScoped<ApartmentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
