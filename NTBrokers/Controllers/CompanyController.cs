@@ -40,7 +40,7 @@ namespace NTBrokers.Controllers
 
         public IActionResult Edit(int id)
         {
-            RealEstateModel model = _realEstateService.GetModelForEdit(id);
+            RealEstateModel model = _realEstateService.GetModelForCompanyEdit(id);
             return View(model);
         }
 

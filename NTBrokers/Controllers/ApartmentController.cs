@@ -37,5 +37,18 @@ namespace NTBrokers.Controllers
             _apartmentService.AddApartment(model);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(int id)
+        {
+            RealEstateModel model = _realEstateService.GetModelForApartmentEdit(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(RealEstateModel model)
+        {
+            _apartmentService.UpdateApartment(model);
+            return RedirectToAction("Index");
+        }
     }
 }

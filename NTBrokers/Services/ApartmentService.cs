@@ -10,10 +10,14 @@ namespace NTBrokers.Services
     public class ApartmentService
     {
         private SqlConnection _connection;
+        private CompanyService _companyService;
+        private BrokerService _brokerService;
 
-        public ApartmentService(SqlConnection connection)
+        public ApartmentService(SqlConnection connection, CompanyService companyService, BrokerService brokerService)
         {
             _connection = connection;
+            _companyService = companyService;
+            _brokerService = brokerService;
         }
 
         public RealEstateModel AddApartment(RealEstateModel model)
@@ -27,12 +31,15 @@ namespace NTBrokers.Services
 
             _connection.Close();
 
+
+
             return model;
         }
 
         public List<ApartmentModel> GetApartments()
         {
             List<ApartmentModel> apartments = new();
+            List<CompanyModel> companies = _companyService.GetCompanies();
 
             _connection.Open();
 
@@ -58,9 +65,27 @@ namespace NTBrokers.Services
                 apartments.Add(apartment);
             }
 
+            foreach (var apartment in apartments)
+            {
+                apartment.Company = companies.Single(a => a.Id == apartment.Company_id);
+            }
+
             _connection.Close();
 
             return apartments;
+        }
+
+        public void UpdateApartment(RealEstateModel model)
+        {
+            string generateAdress = $"{model.Apartments[0].City} {model.Apartments[0].HouseNR}, {model.Apartments[0].FlatNr}";
+
+            string command = $@"UPDATE dbo.Apartments
+                                SET City = '{model.Apartments[0].City}', Street = '{model.Apartments[0].Street}', Address = '{generateAdress}', HouseNR = '{model.Apartments[0].HouseNR}', FlatNr = '{model.Apartments[0].FlatNr}', Floor = '{model.Apartments[0].BuildingFloors}', Broker_id = '{model.BrokerIds[0]}'
+                                WHERE Id = {model.Apartments[0].Id}";
+            _connection.Open();
+
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
         }
     }
 }

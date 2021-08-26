@@ -47,13 +47,14 @@ namespace NTBrokers.Services
             model.Brokers = _brokerService.GetBrokers();
             model.Companies = _companyService.GetCompanies();
             model.Apartments = _apartmentService.GetApartments();
+
             return model;
         }
 
-        public RealEstateModel GetModelForEdit(int editId)
+        public RealEstateModel GetModelForCompanyEdit(int editId)
         {
             RealEstateModel model = new RealEstateModel();
-
+            List<ApartmentModel> apartments = _apartmentService.GetApartments();
             List<CompanyModel> companies = _companyService.GetCompanies();
             CompanyModel company = companies.SingleOrDefault(x => x.Id == editId);
 
@@ -68,6 +69,28 @@ namespace NTBrokers.Services
                 }
             }
 
+            return model;
+        }
+
+        public RealEstateModel GetModelForApartmentEdit(int id)
+        {
+            RealEstateModel model = new RealEstateModel();
+            List<ApartmentModel> apartments = _apartmentService.GetApartments();
+            ApartmentModel apartment = apartments.SingleOrDefault(x => x.Id == id);
+            List<CompanyModel> companies = _companyService.GetCompanies();
+            CompanyModel company = companies.SingleOrDefault(x => x.Id == apartment.Company_id);
+
+            model.Apartments = new List<ApartmentModel>() {apartment};
+            model.Companies = new List<CompanyModel>() {company};
+            model.Brokers = _brokerService.GetBrokers();
+            model.BrokerIds = GetBrokerIds(apartment.Company_id);
+            foreach (var item in model.Brokers)
+            {
+                if (model.BrokerIds.Contains(item.Id))
+                {
+                    company.BrokersEdit.Add(item);
+                }
+            }
             return model;
         }
 
