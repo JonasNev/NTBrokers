@@ -94,6 +94,13 @@ namespace NTBrokers.Services
             return model;
         }
 
+        public RealEstateModel GetModelForBrokerDetails(int id)
+        {
+            RealEstateModel model = new RealEstateModel();
+            model.Apartments = _apartmentService.GetApartments().Where(x => x.Broker_id == id).ToList();
+            model.Brokers = _brokerService.GetBrokers().Where(x => x.Id == id).ToList();
+            return model;
+        }
         public List<int> GetBrokerIds(int companyId)
         {
             List<int> brokerIds = new List<int>();

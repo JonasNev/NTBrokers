@@ -1,6 +1,6 @@
 ﻿@model List<BrokerModel>
 
-<h2 class="d-inline-block mb-4">Countries</h2>
+<h2 class="d-inline-block mb-4">Brokers</h2>
 
 @Html.ActionLink("Add a Broker", "Create", "Broker", null, new { @class = "btn btn-primary float-right" })
 
@@ -14,14 +14,16 @@
         <tr>
             <th class="text-center">Name</th>
             <th class="text-center">Surname</th>
+            <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var broker in Model)
         {
-<tr>
-    <td class="text-center">@broker.Name</td>
-    <td class="text-center">@broker.Surname</td>
-</tr>}
+        <tr>
+            <td class="text-center">@broker.Name</td>
+            <td class="text-center">@broker.Surname</td>
+            <td class="text-center">@Html.ActionLink("Apartments", "Details", "Broker", new { id = broker.Id })</td>
+        </tr>}
     </tbody>
 </table>}

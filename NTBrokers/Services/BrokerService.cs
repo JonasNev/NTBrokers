@@ -23,11 +23,6 @@ namespace NTBrokers.Services
             command.ExecuteNonQuery();
 
             _connection.Close();
-
-            //int athleteId = GetLastId();
-            //if (athleteId == 0) return;
-
-            //AddAthleteSportJunctions(athlete, athleteId);
         }
 
         public List<BrokerModel> GetBrokers()
@@ -56,23 +51,5 @@ namespace NTBrokers.Services
             return brokers;
         }
 
-        public int GetLastId()
-        {
-            int id = 0;
-
-            _connection.Open();
-
-            using var command = new SqlCommand($"SELECT TOP 1 Id FROM dbo.Brokers ORDER BY Id DESC;", _connection);
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                id = reader.GetInt32(0);
-            }
-
-            _connection.Close();
-
-            return id;
-        }
     }
 }

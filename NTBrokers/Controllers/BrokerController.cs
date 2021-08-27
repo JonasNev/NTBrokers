@@ -11,10 +11,12 @@ namespace NTBrokers.Controllers
     public class BrokerController : Controller
     {
         private BrokerService _brokerService;
+        private RealEstateService _realEstateService;
 
-        public BrokerController(BrokerService brokerService)
+        public BrokerController(BrokerService brokerService, RealEstateService realEstateService)
         {
             _brokerService = brokerService;
+            _realEstateService = realEstateService;
         }
         public IActionResult Index()
         {
@@ -32,6 +34,12 @@ namespace NTBrokers.Controllers
         {
             _brokerService.AddBroker(broker);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Details(int id)
+        {
+            RealEstateModel model = _realEstateService.GetModelForBrokerDetails(id);
+            return View(model);
         }
 
     }
