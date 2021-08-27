@@ -30,6 +30,7 @@ namespace NTBrokers.Services
             return model;
         }
 
+
         public RealEstateModel GetModelForApartmentCreate()
         {
             RealEstateModel model = new RealEstateModel();
@@ -54,41 +55,31 @@ namespace NTBrokers.Services
         public RealEstateModel GetModelForCompanyEdit(int editId)
         {
             RealEstateModel model = new RealEstateModel();
-            List<ApartmentModel> apartments = _apartmentService.GetApartments();
-            List<CompanyModel> companies = _companyService.GetCompanies();
-            CompanyModel company = companies.SingleOrDefault(x => x.Id == editId);
-
-            model.Companies = new List<CompanyModel>() {company};
+            model.Companies = _companyService.GetCompanies().Where(x => x.Id == editId).ToList();
             model.Brokers = _brokerService.GetBrokers();
             model.BrokerIds = GetBrokerIds(editId);
             foreach (var item in model.Brokers)
             {
                 if (model.BrokerIds.Contains(item.Id))
                 {
-                    company.BrokersEdit.Add(item);
+                    model.Companies[0].BrokersEdit.Add(item);
                 }
             }
-
             return model;
         }
 
         public RealEstateModel GetModelForApartmentEdit(int id)
         {
             RealEstateModel model = new RealEstateModel();
-            List<ApartmentModel> apartments = _apartmentService.GetApartments();
-            ApartmentModel apartment = apartments.SingleOrDefault(x => x.Id == id);
-            List<CompanyModel> companies = _companyService.GetCompanies();
-            CompanyModel company = companies.SingleOrDefault(x => x.Id == apartment.Company_id);
-
-            model.Apartments = new List<ApartmentModel>() {apartment};
-            model.Companies = new List<CompanyModel>() {company};
+            model.Apartments = _apartmentService.GetApartments().Where(x => x.Id == id).ToList();
+            model.Companies = _companyService.GetCompanies().Where(x => x.Id == model.Apartments[0].Company_id).ToList();
             model.Brokers = _brokerService.GetBrokers();
-            model.BrokerIds = GetBrokerIds(apartment.Company_id);
+            model.BrokerIds = GetBrokerIds(model.Apartments[0].Company_id);
             foreach (var item in model.Brokers)
             {
                 if (model.BrokerIds.Contains(item.Id))
                 {
-                    company.BrokersEdit.Add(item);
+                    model.Companies[0].BrokersEdit.Add(item);
                 }
             }
             return model;
