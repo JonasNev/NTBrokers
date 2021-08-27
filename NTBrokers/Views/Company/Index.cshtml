@@ -1,6 +1,6 @@
 ﻿@model RealEstateModel
 
-<h2 class="d-inline-block mb-4">Countries</h2>
+<h2 class="d-inline-block mb-4">Companies</h2>
 
 @Html.ActionLink("Add a company", "Create", "Company", null, new { @class = "btn btn-primary float-right" })
 
@@ -21,7 +21,7 @@ else
         @foreach (var company in Model.Companies)
         {
             <tr>
-                <td class="text-center">@company.Name</td>
+                <td class="text-center">@Html.ActionLink(company.Name, "Details", "Company", new { id = company.Id })</td>
                 <td class="text-center">@company.Address</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", "Company", new { id = company.Id }, new { @class = "btn btn-warning", @style = "color:white" })

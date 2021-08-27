@@ -57,5 +57,11 @@ namespace NTBrokers.Controllers
             _companyService.DeleteCompany(id);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Details(int id)
+        {
+            RealEstateModel model = _realEstateService.GetModelForCompanyEdit(id);
+            return View(model);
+        }
     }
 }

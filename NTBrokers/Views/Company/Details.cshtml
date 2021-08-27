@@ -1,0 +1,28 @@
+﻿@model RealEstateModel
+
+<h2 class="d-inline-block mb-4">Brokers in @Model.Companies[0].Name</h2>
+
+@Html.ActionLink("Add a company", "Create", "Company", null, new { @class = "btn btn-primary float-right" })
+
+@if (Model.Brokers.Count == 0)
+{
+    <p>There are no brokers in this company</p> }
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Surname</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var broker in Model.Companies[0].BrokersEdit)
+        {
+            <tr>
+                <td class="text-center">@broker.Name</td>
+                <td class="text-center">@broker.Surname</td>
+
+            </tr>}
+        </tbody>
+    </table>}

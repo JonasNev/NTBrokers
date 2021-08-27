@@ -31,8 +31,6 @@ namespace NTBrokers.Services
 
             _connection.Close();
 
-
-
             return model;
         }
 
@@ -40,6 +38,7 @@ namespace NTBrokers.Services
         {
             List<ApartmentModel> apartments = new();
             List<CompanyModel> companies = _companyService.GetCompanies();
+            List<BrokerModel> brokers = _brokerService.GetBrokers();
 
             _connection.Open();
 
@@ -68,8 +67,16 @@ namespace NTBrokers.Services
             foreach (var apartment in apartments)
             {
                 apartment.Company = companies.Single(a => a.Id == apartment.Company_id);
+                if (apartment.Broker_id == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    apartment.Broker = brokers.Single(a => a.Id == apartment.Broker_id);
+                }
+                
             }
-
             _connection.Close();
 
             return apartments;
@@ -77,7 +84,7 @@ namespace NTBrokers.Services
 
         public void UpdateApartment(RealEstateModel model)
         {
-            string generateAdress = $"{model.Apartments[0].City} {model.Apartments[0].HouseNR}, {model.Apartments[0].FlatNr}";
+            string generateAdress = $"{model.Apartments[0].Street} {model.Apartments[0].HouseNR}, {model.Apartments[0].FlatNr},{model.Apartments[0].City}";
 
             string command = $@"UPDATE dbo.Apartments
                                 SET City = '{model.Apartments[0].City}', Street = '{model.Apartments[0].Street}', Address = '{generateAdress}', HouseNR = '{model.Apartments[0].HouseNR}', FlatNr = '{model.Apartments[0].FlatNr}', Floor = '{model.Apartments[0].BuildingFloors}', Broker_id = '{model.BrokerIds[0]}'

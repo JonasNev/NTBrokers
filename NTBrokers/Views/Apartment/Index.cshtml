@@ -12,7 +12,7 @@ else
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th class="text-center">Name</th>
+                <th class="text-center">Apartment address</th>
                 <th class="text-center">Adress</th>
                 <th class="text-center">Brokers in company</th>
                 <th class="text-center">Actions</th>
@@ -24,6 +24,15 @@ else
             <tr>
                 <td class="text-center">@apartment.Address</td>
                 <td class="text-center">@apartment.Company.Name</td>
+                @if (apartment.Broker_id != 0)
+                {
+                    <td class="text-center">@Html.ActionLink(apartment.Broker.Name, "Details", "Company", new {id = apartment.Company_id})</td>
+                }
+                else
+                {
+                    <td class="text-center">Broker not assigned</td> 
+                }
+
                 <td class="text-center">@Html.ActionLink("Edit", "Edit", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-warning", @style = "color:white" })</td>
 
             </tr>

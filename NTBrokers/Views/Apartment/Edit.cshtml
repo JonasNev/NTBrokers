@@ -30,7 +30,7 @@
             @Html.DropDownListFor(m => m.BrokerIds, new SelectList(Model.Companies[0].BrokersEdit, "Id", "Name"), "", new { @class = "form-control" })
         </div>
     </div>
-    @Html.HiddenFor(c => c.Companies[0].Id)
+    @Html.HiddenFor(c => c.Apartments[0].Id)
     <button type="submit" class="btn btn-primary">Add</button>
     @Html.ActionLink("Cancel", "Index", "Company", null, new { @class = "btn btn-secondary" })
 }

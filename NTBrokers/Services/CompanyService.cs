@@ -92,11 +92,6 @@ namespace NTBrokers.Services
             AddJunction(model, model.Companies[0].Id);
         }
 
-        public void GetCompanyBrokers()
-        {
-
-        }
-
         public List<CompanyModel> GetCompanies()
         {
             List<CompanyModel> companies = new();
