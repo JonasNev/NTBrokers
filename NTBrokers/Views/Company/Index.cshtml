@@ -23,7 +23,7 @@ else
             <tr>
                 <td class="text-center">@Html.ActionLink(company.Name, "Details", "Company", new { id = company.Id })</td>
                 <td class="text-center">@company.Address</td>
-                <td>
+                <td class="text-center">
                     @Html.ActionLink("Edit", "Edit", "Company", new { id = company.Id }, new { @class = "btn btn-warning", @style = "color:white" })
                     @Html.ActionLink("Delete", "Delete", "Company", new { id = company.Id }, new { @class = "btn btn-danger", @style = "color:white" })
                 </td>

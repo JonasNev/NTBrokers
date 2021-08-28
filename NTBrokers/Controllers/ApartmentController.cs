@@ -59,7 +59,7 @@ namespace NTBrokers.Controllers
 
         public IActionResult RemoveBroker(int id)
         {
-            _apartmentService.RemoveBroker(id);
+            _apartmentService.RemoveApartmentBroker(id);
             return RedirectToAction("Index", "Broker");
         }
     }

@@ -23,7 +23,10 @@
         <tr>
             <td class="text-center">@broker.Name</td>
             <td class="text-center">@broker.Surname</td>
-            <td class="text-center">@Html.ActionLink("Apartments", "Details", "Broker", new { id = broker.Id })</td>
+            <td class="text-center">
+                @Html.ActionLink("Apartments", "Details", "Broker", new { id = broker.Id })
+                @Html.ActionLink("Delete", "Delete", "Broker", new { id = broker.Id }, new { @class = "btn btn-danger", @style = "color:white" })
+            </td>
         </tr>}
     </tbody>
 </table>}

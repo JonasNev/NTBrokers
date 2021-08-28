@@ -34,7 +34,7 @@ namespace NTBrokers.Services
             return model;
         }
 
-        public void RemoveBroker(int id)
+        public void RemoveApartmentBroker(int id)
         {
             _connection.Open();
 
@@ -47,6 +47,18 @@ namespace NTBrokers.Services
 
         }
 
+        public void RemoveBrokerFromAll(int id)
+        {
+            _connection.Open();
+
+            using var command = new SqlCommand(@$"UPDATE dbo.Apartments
+                                                SET Broker_id = 0
+                                                WHERE Broker_id = {id} ", _connection);
+            command.ExecuteNonQuery();
+
+            _connection.Close();
+
+        }
         public List<ApartmentModel> GetApartments()
         {
             List<ApartmentModel> apartments = new();

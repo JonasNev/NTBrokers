@@ -12,11 +12,13 @@ namespace NTBrokers.Controllers
     {
         private BrokerService _brokerService;
         private RealEstateService _realEstateService;
+        private ApartmentService _apartmentService;
 
-        public BrokerController(BrokerService brokerService, RealEstateService realEstateService)
+        public BrokerController(BrokerService brokerService, RealEstateService realEstateService, ApartmentService apartmentService)
         {
             _brokerService = brokerService;
             _realEstateService = realEstateService;
+            _apartmentService = apartmentService;
         }
         public IActionResult Index()
         {
@@ -42,5 +44,11 @@ namespace NTBrokers.Controllers
             return View(model);
         }
 
+        public IActionResult Delete(int id)
+        {
+            _brokerService.DeleteBroker(id);
+            _apartmentService.RemoveBrokerFromAll(id);
+            return RedirectToAction("Index");
+        }
     }
 }

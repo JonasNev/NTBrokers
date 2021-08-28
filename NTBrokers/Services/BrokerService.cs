@@ -51,5 +51,27 @@ namespace NTBrokers.Services
             return brokers;
         }
 
+        public void DeleteBroker(int deleteid)
+        {
+            string command = $@"DELETE FROM Dbo.Brokers
+                                WHERE Id = {deleteid}";
+            DeleteJunction(deleteid);
+            _connection.Open();
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
+            _connection.Close();
+        }
+
+        public void DeleteJunction(int deleteId)
+        {
+            string command = $"DELETE FROM dbo.CompaniesBrokers WHERE Broker_id = {deleteId};";
+
+            _connection.Open();
+
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
+
+            _connection.Close();
+        }
     }
 }
