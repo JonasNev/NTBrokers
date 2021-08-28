@@ -34,6 +34,19 @@ namespace NTBrokers.Services
             return model;
         }
 
+        public void RemoveBroker(int id)
+        {
+            _connection.Open();
+
+            using var command = new SqlCommand(@$"UPDATE dbo.Apartments
+                                                SET Broker_id = 0
+                                                WHERE Id = {id} ", _connection);
+            command.ExecuteNonQuery();
+
+            _connection.Close();
+
+        }
+
         public List<ApartmentModel> GetApartments()
         {
             List<ApartmentModel> apartments = new();
@@ -93,6 +106,16 @@ namespace NTBrokers.Services
 
             using var sqlCommand = new SqlCommand(command, _connection);
             sqlCommand.ExecuteNonQuery();
+        }
+
+        public void DeleteApartment(int deleteid)
+        {
+            string command = $@"DELETE FROM Dbo.Apartments
+                                WHERE Id = {deleteid}";
+            _connection.Open();
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
+            _connection.Close();
         }
     }
 }

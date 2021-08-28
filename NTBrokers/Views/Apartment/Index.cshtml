@@ -33,7 +33,10 @@ else
                     <td class="text-center">Broker not assigned</td> 
                 }
 
-                <td class="text-center">@Html.ActionLink("Edit", "Edit", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-warning", @style = "color:white" })</td>
+            <td class="text-center">
+                @Html.ActionLink("Edit", "Edit", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-warning", @style = "color:white" })
+                @Html.ActionLink("Delete", "Delete", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-danger", @style = "color:white" })
+            </td>
 
             </tr>
 

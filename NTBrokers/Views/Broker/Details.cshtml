@@ -23,7 +23,7 @@ else
                 <tr>
                     <td class="text-center">@apartment.City</td>
                     <td class="text-center">@apartment.Address</td>
-                    <td class="text-center">REMOVE PLACEHOLDER</td>
+                    <td class="text-center">@Html.ActionLink("Delete", "RemoveBroker", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-danger", @style = "color:white" })</td>
                 </tr>
 
             }

@@ -50,5 +50,17 @@ namespace NTBrokers.Controllers
             _apartmentService.UpdateApartment(model);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Delete(int id)
+        {
+            _apartmentService.DeleteApartment(id);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveBroker(int id)
+        {
+            _apartmentService.RemoveBroker(id);
+            return RedirectToAction("Index", "Broker");
+        }
     }
 }
