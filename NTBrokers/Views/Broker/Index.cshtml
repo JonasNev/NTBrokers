@@ -14,6 +14,7 @@
         <tr>
             <th class="text-center">Name</th>
             <th class="text-center">Surname</th>
+            <th class="text-center">Brokers apartments</th>
             <th class="text-center">Actions</th>
         </tr>
     </thead>
@@ -23,10 +24,11 @@
         <tr>
             <td class="text-center">@broker.Name</td>
             <td class="text-center">@broker.Surname</td>
+            <td class="text-center">@Html.ActionLink("Apartments", "Details", "Broker", new { id = broker.Id })</td>
             <td class="text-center">
-                @Html.ActionLink("Apartments", "Details", "Broker", new { id = broker.Id })
                 @Html.ActionLink("Delete", "Delete", "Broker", new { id = broker.Id }, new { @class = "btn btn-danger", @style = "color:white" })
-            </td>
+                @Html.ActionLink("Edit", "Edit", "Broker", new { id = broker.Id }, new { @class = "btn btn-warning", @style = "color:white" })
+                    </td>
         </tr>}
     </tbody>
 </table>}

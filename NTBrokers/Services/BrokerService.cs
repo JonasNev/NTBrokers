@@ -51,6 +51,17 @@ namespace NTBrokers.Services
             return brokers;
         }
 
+        public void UpdateBroker(BrokerModel model)
+        {
+            string command = $@"UPDATE dbo.Brokers
+                                SET Name = '{model.Name}', Surname = '{model.Surname}'
+                                WHERE Id = {model.Id}";
+            _connection.Open();
+            using var sqlCommand = new SqlCommand(command, _connection);
+            sqlCommand.ExecuteNonQuery();
+            _connection.Close();
+        }
+
         public void DeleteBroker(int deleteid)
         {
             string command = $@"DELETE FROM Dbo.Brokers

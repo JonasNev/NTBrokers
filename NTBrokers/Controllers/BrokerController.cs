@@ -50,5 +50,19 @@ namespace NTBrokers.Controllers
             _apartmentService.RemoveBrokerFromAll(id);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(int id)
+        {
+            List<BrokerModel> brokers = _brokerService.GetBrokers();
+            BrokerModel model = brokers.Single(x => x.Id == id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(BrokerModel model)
+        {
+            _brokerService.UpdateBroker(model);
+            return RedirectToAction("Index");
+        }
     }
 }
