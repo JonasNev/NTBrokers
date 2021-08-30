@@ -64,5 +64,11 @@ namespace NTBrokers.Controllers
             _brokerService.UpdateBroker(model);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Sort (SortFilterModel sortString)
+        {
+            List<BrokerModel> brokers = _brokerService.SortBrokers(sortString);
+            return View("Index", brokers);
+        }
     }
 }

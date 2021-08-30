@@ -4,6 +4,27 @@
 
 @Html.ActionLink("Add an apartment", "Create", "Apartment", null, new { @class = "btn btn-primary float-right" })
 
+
+@using (Html.BeginForm("SortFilter", "Apartment", FormMethod.Post))
+{
+<div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SortFilter.filterCity, "Select what City you want to filter by: ")
+        @Html.DropDownListFor(m => m.SortFilter.filterCity, new SelectList(Model.Apartments, "City", "City"), "", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SortFilter.filterCompany, "Select what Company you want to filter by: ")
+        @Html.DropDownListFor(m => m.SortFilter.filterCompany, new SelectList(Model.Companies, "Id", "Name"), "", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SortFilter.filterBroker, "Select what Broker you want to filter by: ")
+        @Html.DropDownListFor(m => m.SortFilter.filterBroker, new SelectList(Model.Brokers, "Id", "Name"), "", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</div>
+
+}
+
 @if (Model.Apartments.Count == 0)
 {
     <p>There are no Apartments listed</p> }
@@ -19,28 +40,29 @@ else
             </tr>
         </thead>
         <tbody>
-        @foreach (var apartment in Model.Apartments)
-        {
-            <tr>
-                <td class="text-center">@apartment.Address</td>
-                <td class="text-center">@apartment.Company.Name</td>
-                @if (apartment.Broker_id != 0)
-                {
-                    <td class="text-center">@Html.ActionLink(apartment.Broker.Name, "Details", "Company", new {id = apartment.Company_id})</td>
-                }
-                else
-                {
-                    <td class="text-center">Broker not assigned</td> 
-                }
+            @foreach (var apartment in Model.Apartments)
+            {
+                <tr>
+                    <td class="text-center">@apartment.Address</td>
+                    <td class="text-center">@apartment.Company.Name</td>
+                    @if (apartment.Broker_id != 0)
+                    {
+                        <td class="text-center">@Html.ActionLink(apartment.Broker.Name, "Details", "Company", new { id = apartment.Company_id })</td>
+                    }
+                    else
+                    {
+                        <td class="text-center">Broker not assigned</td>
 
-            <td class="text-center">
-                @Html.ActionLink("Edit", "Edit", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-warning", @style = "color:white" })
-                @Html.ActionLink("Delete", "Delete", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-danger", @style = "color:white" })
-            </td>
+                    }
 
-            </tr>
+                    <td class="text-center">
+                        @Html.ActionLink("Edit", "Edit", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-warning", @style = "color:white" })
+                        @Html.ActionLink("Delete", "Delete", "Apartment", new { id = apartment.Id }, new { @class = "btn btn-danger", @style = "color:white" })
+                    </td>
 
-        }
+                </tr>
+
+            }
         </tbody>
     </table>
 

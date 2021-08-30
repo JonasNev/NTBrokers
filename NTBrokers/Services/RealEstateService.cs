@@ -127,5 +127,15 @@ namespace NTBrokers.Services
 
             return cities;
         }
+
+        public RealEstateModel GetModelForSortFilter(SortFilterModel sort)
+        {
+            RealEstateModel model = new RealEstateModel();
+            model.Brokers = _brokerService.GetBrokers();
+            model.Companies = _companyService.GetCompanies();
+            model.Apartments = _apartmentService.SortFilterApartments(sort);
+
+            return model;
+        }
     }
 }

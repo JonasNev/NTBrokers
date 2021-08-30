@@ -25,6 +25,32 @@ namespace NTBrokers.Services
             _connection.Close();
         }
 
+        public List<BrokerModel> SortBrokers(SortFilterModel sortFilter)
+        {
+            List<BrokerModel> brokers = new();
+
+            string query = $@"SELECT * FROM dbo.Brokers
+                              ORDER BY {sortFilter.sortBy}";
+            using var command = new SqlCommand(query, _connection);
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                BrokerModel broker = new()
+                {
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Surname = reader.GetString(2)
+                };
+
+                brokers.Add(broker);
+            }
+
+            _connection.Close();
+
+            return brokers;
+
+        }
         public List<BrokerModel> GetBrokers()
         {
             List<BrokerModel> brokers = new();

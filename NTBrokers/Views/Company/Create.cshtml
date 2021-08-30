@@ -1,5 +1,5 @@
 ﻿@model RealEstateModel
-
+<link href="D:\Programavimas\NTBrokers\NTBrokers\Content\Chosen\chosen.min.css" rel="stylesheet" />
 <h2>Add a company</h2>
 
 @using (Html.BeginForm("Create", "Company", FormMethod.Post))
@@ -24,7 +24,7 @@
         <label asp-for="Brokers[0].Id" class="control-label">Brokers</label>
         <div>
             @*MultiSelect Dropdown*@
-            @Html.ListBoxFor(model => model.BrokerIds, new MultiSelectList(Model.Brokers, "Id", "Name"), new {id = "multiSelectDropDown", multiple = "multiple"})
+            @Html.ListBoxFor(model => model.BrokerIds, new MultiSelectList(Model.Brokers, "Id", "Name"), new { id = "multiSelectDropDown", multiple = "multiple" })
         </div>
     </div>
     @Html.HiddenFor(c => c.Companies[0].Id)
@@ -35,8 +35,11 @@
 @section Scripts
 {
     <script>
-        $(function() {
+        $(function () {
             $("multiSelectDropDown").chosen();
         });
     </script>
 }
+
+
+<script src="~/js/chosen.jquery.min.js"></script>

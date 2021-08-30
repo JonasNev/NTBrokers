@@ -12,5 +12,6 @@ namespace NTBrokers.Models
         public List<CompanyModel> Companies { get; set; }
         public List<int> BrokerIds { get; set; }
         public List<string> Cities { get; set; }
+        public SortFilterModel SortFilter { get; set; }
     }
 }

@@ -4,11 +4,12 @@
 
 @Html.ActionLink("Add a Broker", "Create", "Broker", null, new { @class = "btn btn-primary float-right" })
 
+
 @if (Model.Count == 0)
 {
 <p>There are no brokers</p> }
-            else
-            {
+else
+{
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -21,14 +22,15 @@
     <tbody>
         @foreach (var broker in Model)
         {
-        <tr>
-            <td class="text-center">@broker.Name</td>
-            <td class="text-center">@broker.Surname</td>
-            <td class="text-center">@Html.ActionLink("Apartments", "Details", "Broker", new { id = broker.Id })</td>
-            <td class="text-center">
-                @Html.ActionLink("Delete", "Delete", "Broker", new { id = broker.Id }, new { @class = "btn btn-danger", @style = "color:white" })
-                @Html.ActionLink("Edit", "Edit", "Broker", new { id = broker.Id }, new { @class = "btn btn-warning", @style = "color:white" })
-                    </td>
-        </tr>}
+<tr>
+    <td class="text-center">@broker.Name</td>
+    <td class="text-center">@broker.Surname</td>
+    <td class="text-center">@Html.ActionLink("Apartments", "Details", "Broker", new { id = broker.Id })</td>
+    <td class="text-center">
+        @Html.ActionLink("Delete", "Delete", "Broker", new { id = broker.Id }, new { @class = "btn btn-danger", @style = "color:white" })
+        @Html.ActionLink("Edit", "Edit", "Broker", new { id = broker.Id }, new { @class = "btn btn-warning", @style = "color:white" })
+    </td>
+</tr>
+}
     </tbody>
 </table>}

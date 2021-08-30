@@ -62,5 +62,11 @@ namespace NTBrokers.Controllers
             _apartmentService.RemoveApartmentBroker(id);
             return RedirectToAction("Index", "Broker");
         }
+
+        public IActionResult SortFilter(RealEstateModel model)
+        {
+            RealEstateModel sortModel = _realEstateService.GetModelForSortFilter(model.SortFilter);
+            return View("Index", sortModel);
+        }
     }
 }
