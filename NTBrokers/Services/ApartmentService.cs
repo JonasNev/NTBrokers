@@ -63,8 +63,6 @@ namespace NTBrokers.Services
         public List<ApartmentModel> SortFilterApartments(SortFilterModel sortFilterModel)
         {
             List<ApartmentModel> model = new();
-            List<CompanyModel> companies = _companyService.GetCompanies();
-            List<BrokerModel> brokers = _brokerService.GetBrokers();
 
             string cityString = "";
             string companyString = "";
@@ -85,49 +83,11 @@ namespace NTBrokers.Services
 
             string query = $@"SELECT * FROM dbo.Apartments
                                 WHERE '' = '' {cityString}{companyString}{brokerString}";
-
-
-            _connection.Open();
-
-            using var command = new SqlCommand(query, _connection);
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                ApartmentModel apartment = new()
-                {
-                    Id = reader.GetInt32(0),
-                    City = reader.GetString(1),
-                    Street = reader.GetString(2),
-                    Address = reader.GetString(3),
-                    Floor = reader.GetInt32(4),
-                    BuildingFloors = reader.GetInt32(5),
-                    Company_id = reader.GetInt32(6),
-                    Broker_id = reader.GetInt32(7),
-                    HouseNR = reader.GetInt32(8),
-                    FlatNr = reader.GetInt32(9)
-                };
-
-                model.Add(apartment);
-            }
-
-            foreach (var apartment in model)
-            {
-                apartment.Company = companies.Single(a => a.Id == apartment.Company_id);
-                if (apartment.Broker_id == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    apartment.Broker = brokers.Single(a => a.Id == apartment.Broker_id);
-                }
-
-            }
-            _connection.Close();
+            model = ParseModels(query);
 
             return model;
         }
+
 
         public List<ApartmentModel> GetApartments()
         {
@@ -135,45 +95,8 @@ namespace NTBrokers.Services
             List<CompanyModel> companies = _companyService.GetCompanies();
             List<BrokerModel> brokers = _brokerService.GetBrokers();
 
-            _connection.Open();
-
-            using var command = new SqlCommand("SELECT * FROM dbo.Apartments;", _connection);
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                ApartmentModel apartment = new()
-                {
-                    Id = reader.GetInt32(0),
-                    City = reader.GetString(1),
-                    Street = reader.GetString(2),
-                    Address = reader.GetString(3),
-                    Floor = reader.GetInt32(4),
-                    BuildingFloors = reader.GetInt32(5),
-                    Company_id = reader.GetInt32(6),
-                    Broker_id = reader.GetInt32(7),
-                    HouseNR = reader.GetInt32(8),
-                    FlatNr = reader.GetInt32(9)
-                };
-
-                apartments.Add(apartment);
-            }
-
-            foreach (var apartment in apartments)
-            {
-                apartment.Company = companies.Single(a => a.Id == apartment.Company_id);
-                if (apartment.Broker_id == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    apartment.Broker = brokers.Single(a => a.Id == apartment.Broker_id);
-                }
-                
-            }
-            _connection.Close();
-
+            string query = "SELECT* FROM dbo.Apartments;";
+            apartments = ParseModels(query);
             return apartments;
         }
 
@@ -198,6 +121,52 @@ namespace NTBrokers.Services
             using var sqlCommand = new SqlCommand(command, _connection);
             sqlCommand.ExecuteNonQuery();
             _connection.Close();
+        }
+
+        public List<ApartmentModel> ParseModels(string query)
+        {
+            List<ApartmentModel> models = new();
+            List<CompanyModel> companies = _companyService.GetCompanies();
+            List<BrokerModel> brokers = _brokerService.GetBrokers();
+            _connection.Open();
+
+            using var command = new SqlCommand(query, _connection);
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                ApartmentModel apartment = new()
+                {
+                    Id = reader.GetInt32(0),
+                    City = reader.GetString(1),
+                    Street = reader.GetString(2),
+                    Address = reader.GetString(3),
+                    Floor = reader.GetInt32(4),
+                    BuildingFloors = reader.GetInt32(5),
+                    Company_id = reader.GetInt32(6),
+                    Broker_id = reader.GetInt32(7),
+                    HouseNR = reader.GetInt32(8),
+                    FlatNr = reader.GetInt32(9)
+                };
+
+                models.Add(apartment);
+            }
+
+            foreach (var apartment in models)
+            {
+                apartment.Company = companies.Single(a => a.Id == apartment.Company_id);
+                if (apartment.Broker_id == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    apartment.Broker = brokers.Single(a => a.Id == apartment.Broker_id);
+                }
+
+            }
+            _connection.Close();
+            return models;
         }
     }
 }
