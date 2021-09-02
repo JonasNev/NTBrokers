@@ -64,25 +64,23 @@ namespace NTBrokers.Services
         {
             List<ApartmentModel> model = new();
 
-            string cityString = "";
-            string companyString = "";
-            string brokerString = "";
+            string querystring = "";
 
             if (sortFilterModel.filterCity != null)
             {
-                cityString += $"AND City = '{sortFilterModel.filterCity}' ";
+                querystring += $"AND City = '{sortFilterModel.filterCity}' ";
             }
             if (sortFilterModel.filterCompany != null)
             {
-                companyString += $"AND Company_id = '{sortFilterModel.filterCompany}' ";
+                querystring += $"AND Company_id = '{sortFilterModel.filterCompany}' ";
             }
             if (sortFilterModel.filterBroker != null)
             {
-                brokerString += $"AND Broker_id = '{sortFilterModel.filterBroker}' ";
+                querystring += $"AND Broker_id = '{sortFilterModel.filterBroker}' ";
             }
 
             string query = $@"SELECT * FROM dbo.Apartments
-                                WHERE '' = '' {cityString}{companyString}{brokerString}";
+                                WHERE '' = '' {querystring}";
             model = ParseModels(query);
 
             return model;
