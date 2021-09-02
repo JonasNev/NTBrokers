@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\chosen.min.css" />
     <None Include="wwwroot\js\chosen.jquery.min.js" />
   </ItemGroup>
 

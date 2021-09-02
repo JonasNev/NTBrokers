@@ -48,6 +48,7 @@ namespace NTBrokers.Services
             model.Brokers = _brokerService.GetBrokers();
             model.Companies = _companyService.GetCompanies();
             model.Apartments = _apartmentService.GetApartments();
+            model.Cities = GetCompanyCities();
 
             return model;
         }
@@ -134,6 +135,8 @@ namespace NTBrokers.Services
             model.Brokers = _brokerService.GetBrokers();
             model.Companies = _companyService.GetCompanies();
             model.Apartments = _apartmentService.SortFilterApartments(sort);
+            model.Cities = GetCompanyCities();
+            model.Cities.Distinct();
 
             return model;
         }

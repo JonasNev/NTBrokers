@@ -92,8 +92,6 @@ namespace NTBrokers.Services
         public List<ApartmentModel> GetApartments()
         {
             List<ApartmentModel> apartments = new();
-            List<CompanyModel> companies = _companyService.GetCompanies();
-            List<BrokerModel> brokers = _brokerService.GetBrokers();
 
             string query = "SELECT* FROM dbo.Apartments;";
             apartments = ParseModels(query);

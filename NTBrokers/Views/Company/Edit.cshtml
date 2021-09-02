@@ -23,10 +23,17 @@
     <div class="form-group">
         <label asp-for="Brokers[0].Id" class="control-label">Brokers</label>
         <div>
-            @Html.DropDownListFor(model => model.BrokerIds, new MultiSelectList(Model.Brokers, "Id", "Name"), new { multiple = "multiple", @class = "form-control" })
+            @*MultiSelect Dropdown*@
+            @Html.ListBoxFor(model => model.BrokerIds, new MultiSelectList(@Model.Brokers, "Id", "Name"), new { id = "multiSelectDropDown", multiple = "multiple", style = "width:250px" })
         </div>
     </div>
     @Html.HiddenFor(c => c.Companies[0].Id)
     <button type="submit" class="btn btn-primary">Save changes</button>
     @Html.ActionLink("Cancel", "Index", "Company", null, new { @class = "btn btn-secondary" })
+}
+
+@section scripts {
+    <script>
+        $("#multiSelectDropDown").chosen();
+    </script>
 }

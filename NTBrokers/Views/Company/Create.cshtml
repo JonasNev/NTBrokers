@@ -24,7 +24,7 @@
         <label asp-for="Brokers[0].Id" class="control-label">Brokers</label>
         <div>
             @*MultiSelect Dropdown*@
-            @Html.ListBoxFor(model => model.BrokerIds, new MultiSelectList(Model.Brokers, "Id", "Name"), new { id = "multiSelectDropDown", multiple = "multiple" })
+            @Html.ListBoxFor(model => model.BrokerIds, new MultiSelectList(@Model.Brokers, "Id", "Name"), new { id = "multiSelectDropDown", multiple = "multiple",style = "width:250px" })
         </div>
     </div>
     @Html.HiddenFor(c => c.Companies[0].Id)
@@ -32,14 +32,8 @@
     @Html.ActionLink("Cancel", "Index", "Company", null, new { @class = "btn btn-secondary" })
 }
 
-@section Scripts
-{
+@section scripts {
     <script>
-        $(function () {
-            $("multiSelectDropDown").chosen();
-        });
+        $("#multiSelectDropDown").chosen();
     </script>
 }
-
-
-<script src="~/js/chosen.jquery.min.js"></script>

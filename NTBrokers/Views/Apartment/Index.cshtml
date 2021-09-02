@@ -10,7 +10,7 @@
 <div>
     <div class="form-group">
         @Html.LabelFor(m => m.SortFilter.filterCity, "Select what City you want to filter by: ")
-        @Html.DropDownListFor(m => m.SortFilter.filterCity, new SelectList(Model.Apartments, "City", "City"), "", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.SortFilter.filterCity, new SelectList(Model.Cities),"", new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.SortFilter.filterCompany, "Select what Company you want to filter by: ")
